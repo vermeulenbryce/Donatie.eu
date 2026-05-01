@@ -111,13 +111,27 @@ body.has-public-nav {
   overflow-x: clip;
 }
 
-/* Header: rechts (punten + meldingen + account) niet laten klemmen — legacy grid gebruikt twee 1fr-kolommen. */
+/*
+ * Header: drie kolommen zoals legacy — gelijke 1fr-links / 1fr-rechts zodat .nav-links
+ * exact in het midden van de balk staat (ook met een extra „Communities“-item).
+ * Een max-content rechtskolom schoof het menu naar links.
+ */
 .public-site.donatie-legacy-spa #mainNav .nav-inner {
-  grid-template-columns: minmax(0, 1fr) auto max-content !important;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  align-items: center;
 }
 
-.public-site.donatie-legacy-spa #navLoggedIn.nav-right {
-  flex-shrink: 0;
+.public-site.donatie-legacy-spa #mainNav .nav-links {
+  justify-self: center;
+}
+
+.public-site.donatie-legacy-spa #mainNav .nav-logo {
+  justify-self: start;
+  min-width: 0;
+}
+
+.public-site.donatie-legacy-spa #mainNav .nav-right {
+  justify-self: end;
   gap: clamp(6px, 1.8vw, 10px);
 }
 
