@@ -1,7 +1,7 @@
 # Cloudflare Workers: serve Vite SPA build. Zonder dit levert een hard refresh op
 # /admin/sessions (en andere client-routes) 404 — er is geen fysiek bestand op dat pad.
 # Pas `name` aan naar je bestaande Worker-naam, daarna: `npm run build` en `wrangler deploy`.
-name = "donatie"
+name = "donaties"
 compatibility_date = "2025-04-28"
 
 [assets]
