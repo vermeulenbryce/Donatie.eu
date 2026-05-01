@@ -1,0 +1,9 @@
+---
+description: Na admin/publieke wijzigingen — verificatiestappen noemen
+alwaysApply: true
+---
+
+# Functionele verificatie
+
+- Bij wijzigingen aan **admin**, **publieke layout**, **Supabase/RLS** of **`site_settings`**: eindig je antwoord met een kort blok **"Zo test je dit"** met concrete stappen (admin-route, publieke URL, of `npm run build`).  
+- Houd rekening met [`docs/ADMIN_FUNCTIONAL_TEST_CHECKLIST.md`](docs/ADMIN_FUNCTIONAL_TEST_CHECKLIST.md); breid die uit als er een nieuw stuk flow bij komt.

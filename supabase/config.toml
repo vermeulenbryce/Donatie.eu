@@ -1,0 +1,30 @@
+
+[functions.create-mollie-payment]
+enabled = true
+verify_jwt = false
+import_map = "./functions/create-mollie-payment/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/create-mollie-payment/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/create-mollie-payment/*.html" ]
+
+[functions.mollie-webhook]
+enabled = true
+verify_jwt = false
+import_map = "./functions/mollie-webhook/deno.json"
+entrypoint = "./functions/mollie-webhook/index.ts"
+
+[functions.send-email]
+enabled = true
+# Gebruiker roept aan via supabase.functions.invoke (sessie-JWT); Mollie-webhook gebruikt service role in Authorization.
+verify_jwt = true
+import_map = "./functions/send-email/deno.json"
+entrypoint = "./functions/send-email/index.ts"
+
+[functions.analyze-image-safety]
+enabled = true
+verify_jwt = true
+import_map = "./functions/analyze-image-safety/deno.json"
+entrypoint = "./functions/analyze-image-safety/index.ts"

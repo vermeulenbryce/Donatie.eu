@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" role="img" aria-label="Donatie.eu">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a237e"/>
+      <stop offset="100%" style="stop-color:#43a3fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="52" height="52" rx="14" fill="url(#g)"/>
+  <path fill="#fff" d="M26 38c-.5 0-1-.2-1.4-.5l-9.8-7.2C11.2 26.8 8 22.4 8 17.8 8 14.2 10.8 11 14.5 11c2.2 0 4.3 1 5.5 2.6 1.2-1.6 3.3-2.6 5.5-2.6 3.7 0 6.5 3.2 6.5 6.8 0 4.6-3.2 9-6.8 12.5L27.4 37.5c-.4.3-.9.5-1.4.5z" opacity=".95"/>
+</svg>

@@ -1,0 +1,959 @@
+/**
+ * Small styles that exist only in the React fork (not in legacy index.html).
+ * Keep this file tiny — public styling should come from /donatie-legacy-index.css.
+ */
+
+/* ── Fallback design tokens (= donatie-legacy-index.css :root)
+   Bij een 404 op `/donatie-legacy-index.css` zijn `var(--border)`, `var(--r)` enz. leeg —
+   shorthand `border: 1.5px solid var(--border)` wordt dan **ongeldig** en tegeltjes zoals
+   „Maandelijks gedoneerd” zijn visueel weg / zonder paneel. Deze blok blijft door de bundel altijd laden. ── */
+:root {
+  --blue: #43a3fa;
+  --blue-dark: #1a7fd4;
+  --blue-light: #ebf5ff;
+  --pink: #fdb2c7;
+  --pink-dark: #e8799a;
+  --pink-light: #fff0f4;
+  --green: #5de8b0;
+  --green-dark: #28c484;
+  --green-light: #edfff7;
+  --yellow: #ffd166;
+  --orange: #ff6b6b;
+  --dark: #0f0f1a;
+  --dark2: #1a1a2e;
+  --dark3: #2a2a42;
+  --mid: #5c5c7a;
+  --light: #9090aa;
+  --off: #f7f6f3;
+  --white: #ffffff;
+  --border: rgba(15, 15, 26, 0.09);
+  --shadow: 0 2px 12px rgba(15, 15, 26, 0.08);
+  --shadow-lg: 0 12px 48px rgba(15, 15, 26, 0.14);
+  --r: 16px;
+  --r-sm: 10px;
+  --r-full: 999px;
+  --nav-h: 58px;
+}
+
+/* Fallback account-tegeltjes (.dash-stat) als legacy CSS niet laadt */
+#page-dashboard.account-dashboard-v2 .dash-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 900px) {
+  #page-dashboard.account-dashboard-v2 .dash-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  #page-dashboard.account-dashboard-v2 .dash-stat-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+#page-dashboard.account-dashboard-v2 .dash-stat {
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: var(--r);
+  border: 1.5px solid var(--border);
+  padding: 20px 22px;
+}
+
+#page-dashboard.account-dashboard-v2 button.dash-stat {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+#page-dashboard.account-dashboard-v2 .dash-stat-icon {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+#page-dashboard.account-dashboard-v2 .dash-stat-num {
+  font-family: Fraunces, ui-serif, Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 900;
+}
+
+#page-dashboard.account-dashboard-v2 .dash-stat-lbl {
+  font-size: 0.75rem;
+  color: var(--mid);
+  margin-top: 2px;
+}
+
+/* Legacy index toggles .page with .active; React shows one route — always show .page under the shell */
+.public-site .page {
+  display: block !important;
+  min-height: calc(100vh - var(--nav-h));
+  min-height: calc(100dvh - var(--nav-h));
+}
+
+/* Bottom nav gebruikt in de index <button>; hier <a> — zelfde lay-out */
+a.bnav-btn {
+  text-decoration: none;
+  color: inherit;
+}
+
+body.has-public-nav {
+  /* Wint van eventuele resterende tooling-defaults zodra legacy-CSS nog laadt */
+  font-family: Outfit, system-ui, -apple-system, sans-serif;
+}
+
+/* Voorkom horizontale bleed op tablet zonder body-layout te veranderen */
+.public-site.donatie-legacy-spa {
+  overflow-x: clip;
+}
+
+/* Header: rechts (punten + meldingen + account) niet laten klemmen — legacy grid gebruikt twee 1fr-kolommen. */
+.public-site.donatie-legacy-spa #mainNav .nav-inner {
+  grid-template-columns: minmax(0, 1fr) auto max-content !important;
+}
+
+.public-site.donatie-legacy-spa #navLoggedIn.nav-right {
+  flex-shrink: 0;
+  gap: clamp(6px, 1.8vw, 10px);
+}
+
+/* Modals: safe-area (notch / home indicator); donatie-modal nooit breder dan viewport */
+.public-site .modal-overlay.open {
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px))
+    max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  box-sizing: border-box;
+}
+
+.public-site #donateModal .modal-box {
+  max-width: min(440px, calc(100vw - 32px));
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Bottom-nav met 7 items (Community) — override legacy repeat(6) */
+@media (max-width: 768px) {
+  .public-site .bottom-nav-inner.bottom-nav-inner--7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  }
+}
+
+.footer-dev {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer-dev a {
+  color: rgba(255, 255, 255, 0.55);
+  margin-right: 12px;
+}
+
+/* ── Sticker bestellen (React): legacy carousel-styling vereist .sc-active — zonder JS bleven alle kaarten ~55% opacity op mobiel ── */
+.public-site main.sticker-page-routes .sticker-card:not(.sc-active) .sticker-pkg {
+  opacity: 1 !important;
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.12) !important;
+}
+
+.public-site main.sticker-page-routes .sticker-card:not(.sc-active) .sticker-pkg.featured {
+  box-shadow: 0 12px 40px rgba(67, 163, 250, 0.24) !important;
+}
+
+/* Zakelijk: «Meest gekozen» iets lager (binnen de kaart) op tablet/mobiel — leesbaar en niet afgesneden */
+@media (max-width: 1024px) {
+  .public-site main.sticker-page-routes .sticker-featured-badge {
+    top: 12px !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .public-site main.sticker-page-routes .sticker-pkg.featured {
+    padding-top: 44px !important;
+  }
+}
+
+/* Sectie met uitlegkaarten: 1 kolom op smalle schermen + titels (o.a. Offline merkzichtbaarheid) niet afgekapt */
+@media (max-width: 720px) {
+  .public-site main.sticker-page-routes .grid2 {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .public-site main.sticker-page-routes .card-flat {
+    overflow: visible !important;
+  }
+
+  .public-site main.sticker-page-routes .card-flat h3.ff {
+    line-height: 1.38;
+    overflow-wrap: anywhere;
+  }
+
+  .public-site main.sticker-page-routes .card-flat p {
+    line-height: 1.72;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PUNTENSYSTEEM — mobiele / tablet UX (scoped #page-puntensysteem)
+   ══════════════════════════════════════════════════════════════ */
+
+#page-puntensysteem .pts-hero {
+  padding: 88px 0 72px;
+}
+
+/* Donnie-knop: in-flow, geen fixed FAB over content — wel grote tikzone */
+#page-puntensysteem .pts-ask-donnie-btn {
+  display: inline-flex !important;
+  position: relative !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: auto;
+  max-width: 100%;
+  min-height: 48px;
+  padding: 14px 24px !important;
+  font-size: 0.95rem !important;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+#page-puntensysteem .pts-hero-rule {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  font-weight: 800;
+  font-size: clamp(0.88rem, 3.2vw, 1rem);
+}
+
+#page-puntensysteem .pts-hero-rule__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px clamp(14px, 4vw, 28px);
+  text-align: center;
+}
+
+#page-puntensysteem .pts-hero-rule__from {
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#page-puntensysteem .pts-hero-rule__arrow {
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
+  font-size: 1.2rem;
+  padding: 14px clamp(12px, 3vw, 18px);
+  flex-shrink: 0;
+}
+
+#page-puntensysteem .pts-hero-rule__to {
+  color: #ffd700;
+  font-family: Fraunces, serif;
+  font-size: clamp(1.05rem, 3.8vw, 1.35rem);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Verdien-kaarten: responsief raster */
+#page-puntensysteem .pts-earn-grid {
+  display: grid;
+  gap: clamp(14px, 3vw, 18px);
+  max-width: 1040px;
+  margin: 0 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#page-puntensysteem .pts-earn-card__text {
+  font-size: clamp(0.9rem, 2.9vw, 0.93rem);
+  color: #4b5563;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Waarvoor sparen: kaarten + rijen */
+#page-puntensysteem .pts-reward-grid {
+  display: grid;
+  gap: clamp(14px, 2.5vw, 20px);
+  margin-bottom: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#page-puntensysteem .pts-reward-card__body {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#page-puntensysteem .pts-reward-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+#page-puntensysteem .pts-reward-row__label {
+  font-size: clamp(0.86rem, 2.6vw, 0.9rem);
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.45;
+  flex: 1 1 180px;
+  min-width: 0;
+}
+
+#page-puntensysteem .pts-reward-row__pts {
+  font-family: Fraunces, serif;
+  font-size: clamp(0.88rem, 2.7vw, 0.95rem);
+  font-weight: 900;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Level-kaarten */
+#page-puntensysteem .pts-level-grid {
+  display: grid;
+  gap: 14px;
+  max-width: 960px;
+  margin: 0 auto;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+#page-puntensysteem .pts-level-card {
+  border-radius: 18px;
+  padding: 20px 14px;
+  text-align: center;
+}
+
+#page-puntensysteem .pts-level-card__icon {
+  font-size: clamp(1.75rem, 4vw, 2rem);
+  margin-bottom: 8px;
+}
+
+#page-puntensysteem .pts-level-card__title {
+  font-family: Fraunces, serif;
+  font-size: clamp(0.95rem, 2.6vw, 1.05rem);
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+#page-puntensysteem .pts-level-card__range {
+  font-size: clamp(0.78rem, 2.3vw, 0.82rem);
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+#page-puntensysteem .pts-level-card__perks {
+  font-size: clamp(0.78rem, 2.3vw, 0.82rem);
+  color: #374151;
+  padding: 9px 10px;
+  border-radius: 8px;
+  line-height: 1.48;
+}
+
+/* Voorbeeldregels rekensimulator — vaste puntenkolom + tabulaire cijfers = rechte lijn */
+#page-puntensysteem .pts-examples-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+#page-puntensysteem .pts-example-row {
+  --pts-example-points-col: clamp(5.75rem, 22vw, 7.25rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--pts-example-points-col) minmax(7.5rem, 1.05fr);
+  align-items: center;
+  column-gap: clamp(14px, 3vw, 22px);
+  row-gap: 8px;
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: clamp(14px, 3vw, 18px) clamp(16px, 3vw, 22px);
+}
+
+#page-puntensysteem .pts-example-row--success {
+  border-color: #bbf7d0;
+}
+
+#page-puntensysteem .pts-example-row--highlight {
+  background: linear-gradient(90deg, #eef2ff, #f5f3ff);
+  border-color: #c7d2fe;
+}
+
+#page-puntensysteem .pts-example-row__main {
+  min-width: 0;
+  text-align: left;
+}
+
+#page-puntensysteem .pts-example-row__title {
+  font-weight: 700;
+  font-size: clamp(0.9rem, 2.9vw, 0.94rem);
+  color: #111827;
+}
+
+#page-puntensysteem .pts-example-row__sub {
+  font-size: clamp(0.78rem, 2.6vw, 0.82rem);
+  color: #9ca3af;
+  margin-top: 3px;
+}
+
+#page-puntensysteem .pts-example-row__points {
+  font-family: Fraunces, serif, ui-serif, Georgia, serif;
+  font-size: clamp(1.25rem, 5vw, 1.45rem);
+  font-weight: 900;
+  color: #4f46e5;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  white-space: nowrap;
+  justify-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+#page-puntensysteem .pts-example-row__points--green {
+  color: #059669;
+}
+
+#page-puntensysteem .pts-example-row__points--purple {
+  color: #7c3aed;
+}
+
+#page-puntensysteem .pts-example-row__badge {
+  text-align: right;
+  justify-self: end;
+  min-width: 0;
+}
+
+#page-puntensysteem .pts-example-row__badge span:not(.pts-example-row__badge-strong) {
+  font-size: clamp(0.72rem, 2.5vw, 0.76rem);
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+#page-puntensysteem .pts-example-row__badge-strong {
+  font-size: clamp(0.74rem, 2.5vw, 0.78rem);
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+#page-puntensysteem .pts-example-row__badge-green {
+  color: #059669;
+  background: #dcfce7;
+}
+
+#page-puntensysteem .pts-example-row__badge-purple {
+  color: #7c3aed;
+  background: #ede9fe;
+}
+
+#page-puntensysteem .pts-calc-panel {
+  margin-top: 16px;
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 16px;
+  padding: clamp(16px, 4vw, 22px);
+}
+
+#page-puntensysteem .pts-calc-panel .input {
+  font-size: 1rem;
+  min-height: 46px;
+}
+
+@media (max-width: 640px) {
+  #page-puntensysteem .pts-hero {
+    padding-top: 56px !important;
+    padding-bottom: 48px !important;
+  }
+
+  #page-puntensysteem .pts-hero-rule {
+    width: 100%;
+    grid-template-columns: 1fr;
+    border-radius: 16px;
+    font-size: 0.95rem;
+  }
+
+  #page-puntensysteem .pts-hero-rule__from,
+  #page-puntensysteem .pts-hero-rule__arrow,
+  #page-puntensysteem .pts-hero-rule__to {
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
+  #page-puntensysteem .pts-hero-rule__to {
+    border-bottom: none !important;
+  }
+
+  #page-puntensysteem .pts-hero-rule__arrow {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 4px !important;
+  }
+
+  #page-puntensysteem .pts-earn-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  #page-puntensysteem .pts-reward-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #page-puntensysteem .pts-level-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  #page-puntensysteem .pts-example-row {
+    grid-template-columns: minmax(0, 1fr) var(--pts-example-points-col, clamp(5.75rem, 22vw, 7.25rem)) !important;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 12px !important;
+    row-gap: 10px !important;
+  }
+
+  #page-puntensysteem .pts-example-row__main {
+    grid-column: 1 / -1;
+  }
+
+  #page-puntensysteem .pts-example-row__points {
+    grid-column: 2;
+    grid-row: 2;
+    text-align: right !important;
+    justify-content: flex-end;
+  }
+
+  #page-puntensysteem .pts-example-row__badge {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left !important;
+    justify-self: start;
+    padding-bottom: 0;
+  }
+
+  /* Sectievulling: meer adem voor kleine schermen */
+  #page-puntensysteem .section,
+  #page-puntensysteem .section-sm {
+    padding-top: 44px !important;
+    padding-bottom: 44px !important;
+  }
+
+  #page-puntensysteem .container {
+    padding-left: calc(14px + env(safe-area-inset-left, 0px)) !important;
+    padding-right: calc(14px + env(safe-area-inset-right, 0px)) !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 991px) {
+  #page-puntensysteem .pts-earn-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  #page-puntensysteem .pts-reward-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  #page-puntensysteem .pts-level-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  /* Hele smalle telefoons: levels stack één kolom voor leesbaarheid */
+  #page-puntensysteem .pts-level-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FAQ (/faq) — Veiligheid + puntensysteem-voorbeeld: eerder legacy fixes
+   gingen alleen op #page-hoe-het-werkt; React FAQ miste die scope.
+   ═══════════════════════════════════════════════════════════════ */
+
+.public-site main.page-faq .faq-pts-example__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.public-site main.page-faq .faq-pts-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px 14px;
+  background: #fff;
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.public-site main.page-faq .faq-pts-row__label {
+  font-size: clamp(0.87rem, 3vw, 0.93rem);
+  line-height: 1.48;
+  flex: 1 1 120px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.public-site main.page-faq .faq-pts-row .chip {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+@media (max-width: 991px) {
+  .public-site main.page-faq .faq-compliance-grid.grid2 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 26px !important;
+    align-items: stretch !important;
+  }
+
+  .public-site main.page-faq .faq-compliance-grid > *,
+  .public-site main.page-faq .grid2.faq-compliance-grid > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .public-site main.page-faq .feat-item > div:last-child {
+    min-width: 0;
+  }
+
+  .public-site main.page-faq .faq-pts-example {
+    overflow: visible;
+  }
+}
+
+@media (max-width: 768px) {
+  .public-site main.page-faq {
+    overflow-x: hidden;
+  }
+
+  .public-site main.page-faq .faq-compliance-grid .section-sub {
+    max-width: 100%;
+  }
+
+  /* Stapel label + punt op heel smalle breedte voor zekerheid */
+  .public-site main.page-faq .faq-pts-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .public-site main.page-faq .faq-pts-row .chip {
+    align-self: flex-start;
+  }
+
+  .public-site main.page-faq .container.section {
+    padding-left: calc(14px + env(safe-area-inset-left, 0px)) !important;
+    padding-right: calc(14px + env(safe-area-inset-right, 0px)) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .public-site main.page-faq .faq-pts-example {
+    padding: 20px 16px !important;
+  }
+
+  .public-site main.page-faq .faq-compliance-grid {
+    gap: 18px !important;
+  }
+}
+
+/* FAQ — Niveaus-blok onderaan: op desktop één gecentreerde rij met 6 gelijke kolommen (auto-fill liet lege tracks over) */
+.public-site main.page-faq .faq-niveaus-grid {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-items: stretch;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+@media (min-width: 900px) {
+  .public-site main.page-faq .faq-niveaus-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+/* Site-inbox / meldingen: volledig bericht lezen (modal, boven header-bel z=99999) */
+.site-notif-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  box-sizing: border-box;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px))
+    max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+}
+
+.site-notif-detail-panel {
+  width: min(560px, calc(100vw - 24px));
+  max-height: min(85vh, 880px);
+  max-height: min(85dvh, 880px);
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.site-notif-detail-panel__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px 0 18px;
+  flex-shrink: 0;
+}
+
+.site-notif-detail-panel__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  min-width: 0;
+}
+
+.site-notif-detail-panel__chip {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.site-notif-detail-panel__chip--broadcast {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.site-notif-detail-panel__close {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  margin: -4px -6px 0 0;
+  border: none;
+  border-radius: 12px;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-notif-detail-panel__close:hover {
+  background: #e5e7eb;
+}
+
+.site-notif-detail-panel__close:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.site-notif-detail-panel__icon {
+  font-size: 2rem;
+  padding: 4px 18px 0;
+  flex-shrink: 0;
+}
+
+.site-notif-detail-panel__title {
+  font-family: Fraunces, ui-serif, Georgia, serif;
+  font-size: clamp(1.15rem, 3.8vw, 1.35rem);
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 0;
+  padding: 6px 18px 12px;
+  flex-shrink: 0;
+}
+
+.site-notif-detail-panel__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 18px 16px;
+}
+
+.site-notif-detail-panel__body {
+  font-size: clamp(0.95rem, 2.8vw, 1.02rem);
+  line-height: 1.65;
+  color: #334155;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.site-notif-detail-panel__body a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.site-notif-detail-backdrop,
+.site-notif-detail-panel {
+  -webkit-font-smoothing: antialiased;
+}
+
+.site-notif-detail-panel__empty {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.site-notif-detail-panel__footer {
+  flex-shrink: 0;
+  padding: 12px 18px max(14px, env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* Mobiel / klein: paneel als sheet onderaan, volle breedte */
+@media (max-width: 640px) {
+  .site-notif-detail-backdrop {
+    align-items: flex-end;
+    justify-content: stretch;
+    padding: 0;
+  }
+
+  .site-notif-detail-panel {
+    width: 100%;
+    max-width: none;
+    max-height: min(92vh, 100%);
+    max-height: min(92dvh, 100%);
+    border-radius: 20px 20px 0 0;
+  }
+
+  .site-notif-detail-panel__top {
+    padding-top: max(14px, env(safe-area-inset-top, 0px));
+    padding-left: max(18px, env(safe-area-inset-left, 0px));
+    padding-right: max(14px, env(safe-area-inset-right, 0px));
+  }
+
+  .site-notif-detail-panel__icon,
+  .site-notif-detail-panel__title,
+  .site-notif-detail-panel__scroll {
+    padding-left: max(18px, env(safe-area-inset-left, 0px));
+    padding-right: max(18px, env(safe-area-inset-right, 0px));
+  }
+
+  .site-notif-detail-panel__footer {
+    padding-left: max(18px, env(safe-area-inset-left, 0px));
+    padding-right: max(18px, env(safe-area-inset-right, 0px));
+  }
+}
+
+/* Tablet: iets meer adem */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .site-notif-detail-panel {
+    width: min(520px, calc(100vw - 32px));
+  }
+}
+
+/* Inbox-lijst: korte preview (dashboard + bel) */
+.site-notif-list-body-preview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Account — profielinstellingen: sectiekoppen altijd zichtbaar (desktop / tablet / mobiel) */
+#page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+  padding: 0;
+  line-height: 1.35;
+  text-align: left;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+#page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title--compact {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
+  margin-bottom: 10px;
+}
+
+#page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title--blue {
+  color: #1a237e;
+}
+#page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title--orange {
+  color: #92400e;
+}
+#page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title--green {
+  color: #15803d;
+}
+#page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title--indigo {
+  color: #3730a3;
+}
+#page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title--violet {
+  color: #7c3aed;
+}
+#page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title--slate {
+  color: #475569;
+}
+
+@media (max-width: 768px) {
+  #page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title,
+  #page-dashboard.account-dashboard-v2 #dash-profiel .dash-profiel-section-title--compact {
+    text-align: left !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}

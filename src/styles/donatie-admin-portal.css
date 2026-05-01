@@ -1,0 +1,602 @@
+/* Donatie.eu — React admin portal (Phase 1)
+   Onafhankelijke scroll van sidebar en main, responsive mobile dropdown. */
+
+.admin-portal-shell {
+  /* 100dvh voorkomt afsnijden onder de browser-UI op veel mobiele browsers */
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  background: #f3f4f6;
+  color: #1f2937;
+  font-family: Outfit, system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.admin-portal-sidebar {
+  background: linear-gradient(180deg, #1a237e 0%, #283593 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.admin-portal-sidebar-head {
+  padding: 22px 20px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+.admin-portal-sidebar-head img {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  object-fit: cover;
+}
+
+.admin-portal-sidebar-head strong {
+  font-family: Fraunces, serif;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.admin-portal-sidebar-head .badge {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: 4px;
+}
+
+.admin-portal-nav {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.admin-portal-nav::-webkit-scrollbar {
+  width: 6px;
+}
+.admin-portal-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+}
+
+.admin-portal-nav-section {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 12px 6px;
+  margin-top: 6px;
+}
+
+.admin-portal-nav-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.18s, color 0.18s;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  text-align: left;
+  width: 100%;
+}
+
+.admin-portal-nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.admin-portal-nav-item.is-active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-weight: 700;
+}
+
+.admin-portal-nav-item .icon {
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+  opacity: 0.85;
+  font-size: 1rem;
+}
+
+.admin-portal-nav-item.is-wip::after {
+  content: 'WIP';
+  margin-left: auto;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: rgba(251, 191, 36, 0.22);
+  color: #fde68a;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.admin-portal-sidebar-foot {
+  padding: 14px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.admin-portal-sidebar-foot .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.admin-portal-sidebar-foot .who {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.2;
+}
+
+.admin-portal-sidebar-foot .who strong {
+  display: block;
+  color: #fff;
+  font-size: 0.87rem;
+}
+
+.admin-portal-sidebar-foot .logout {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.admin-portal-sidebar-foot .logout:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.admin-portal-main {
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  padding: 0;
+  background: #f3f4f6;
+  min-width: 0;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-portal-main-inner {
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.admin-portal-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.admin-portal-topbar h1 {
+  font-family: Fraunces, serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #1a237e;
+  margin: 0;
+}
+
+.admin-portal-topbar p {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 2px 0 0;
+}
+
+.admin-portal-topbar .admin-portal-badge {
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.admin-portal-topbar code {
+  word-break: break-all;
+  font-size: 0.68em;
+}
+
+.admin-portal-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  margin-bottom: 20px;
+}
+
+.admin-portal-card-title {
+  font-family: Fraunces, serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: #1a237e;
+  margin: 0 0 4px;
+}
+
+.admin-portal-card-sub {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin: 0 0 16px;
+}
+
+.admin-portal-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.admin-portal-stat {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+.admin-portal-stat .num {
+  font-family: Fraunces, serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #1a237e;
+}
+.admin-portal-stat .lbl {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.admin-portal-btn {
+  background: #1a237e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-weight: 700;
+  font-size: 0.86rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: filter 0.15s;
+}
+.admin-portal-btn:hover {
+  filter: brightness(1.12);
+}
+.admin-portal-btn.is-danger {
+  background: #dc2626;
+}
+.admin-portal-btn.is-ghost {
+  background: transparent;
+  color: #1a237e;
+  border: 1.5px solid #c7d2fe;
+}
+.admin-portal-btn.is-blue {
+  background: #3a98f8;
+}
+.admin-portal-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.admin-portal-input,
+.admin-portal-textarea {
+  width: 100%;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  background: #fff;
+  color: #111827;
+  box-sizing: border-box;
+}
+.admin-portal-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+.admin-portal-input:focus,
+.admin-portal-textarea:focus {
+  outline: none;
+  border-color: #3a98f8;
+  box-shadow: 0 0 0 3px rgba(58, 152, 248, 0.18);
+}
+
+.admin-portal-row {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.admin-portal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.admin-portal-table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.admin-portal-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: top;
+}
+.admin-portal-table tr:hover td {
+  background: #fafafa;
+}
+
+.admin-portal-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-portal-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.admin-portal-badge.ok       { background: #dcfce7; color: #166534; }
+.admin-portal-badge.warn     { background: #fef3c7; color: #92400e; }
+.admin-portal-badge.err      { background: #fee2e2; color: #991b1b; }
+.admin-portal-badge.info     { background: #e0e7ff; color: #3730a3; }
+
+.admin-portal-empty {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.88rem;
+  padding: 28px 12px;
+  border: 1.5px dashed #e5e7eb;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.admin-portal-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #111827;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.18s, transform 0.18s;
+  pointer-events: none;
+}
+.admin-portal-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.admin-portal-toast.err { background: #991b1b; }
+.admin-portal-toast.ok  { background: #166534; }
+
+/* Financiën: periode-knoppen + link — op smal scherm breekt de link netjes naar een volgende regel */
+.admin-portal-period-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+}
+.admin-portal-period-toolbar-link {
+  flex: 1 1 auto;
+}
+@media (min-width: 720px) {
+  .admin-portal-period-toolbar-link {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 880px) {
+  .admin-portal-toast {
+    left: 12px;
+    right: 12px;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    max-width: calc(100vw - 24px);
+    width: auto;
+    margin: 0 auto;
+    text-align: center;
+    box-sizing: border-box;
+  }
+}
+
+.admin-portal-mobilebar {
+  display: none;
+  background: linear-gradient(135deg, #1a237e, #283593);
+  color: #fff;
+  padding: max(10px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px))
+    max(10px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+.admin-portal-mobilebar button {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/** Zoekbalk admin tabellen — volle breedte op elk scherm. */
+.admin-portal-live-search-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.admin-portal-live-search-input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/**
+ * Homepage / lange formulieren: blijft onderaan zichtbaar i.c.m. scrollbar + safe-area
+ */
+.admin-portal-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  padding: 18px 0;
+  padding-bottom: max(18px, env(safe-area-inset-bottom, 0px));
+  margin-top: 12px;
+  background: linear-gradient(180deg, rgba(243, 244, 246, 0) 0%, #f3f4f6 28%);
+}
+
+@media (max-width: 900px) {
+  .admin-portal-form-actions {
+    justify-content: stretch;
+    padding-bottom: max(22px, env(safe-area-inset-bottom, 16px));
+  }
+  .admin-portal-form-actions .admin-portal-btn {
+    flex: 1 1 auto;
+    min-width: min(160px, 100%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/**
+ * Alleen op smalle telefoons: zijbalk als volscherm-overlay (Menu-knop).
+ * Vanaf 720px: vaste zijbalk zoals desktop — ook op tablet en grotere telefoons in landschap.
+ *
+ * NB: hoofd kolom moet géén aparte volle viewport-hoogte hebben wanneer de mobiele balk ook ruimte
+ * inneemt; anders valt onderaan (sticky knoppen) buiten het scherm.
+ */
+@media (max-width: 719px) {
+  .admin-portal-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    min-height: 0;
+  }
+  .admin-portal-sidebar {
+    display: none;
+  }
+  .admin-portal-sidebar.is-mobile-open {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 200;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+  .admin-portal-mobilebar {
+    display: flex;
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .admin-portal-main {
+    grid-row: 2;
+    grid-column: 1;
+    height: auto;
+    max-height: none;
+    min-height: 0;
+  }
+  .admin-portal-main-inner {
+    padding: 16px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom, 12px));
+  }
+}
+
+/**
+ * Community beheer: desktop 2 kolommen; tablet/mobiel één kolom (geen inline grid — anders
+ * wint die boven @media en blijft de layout op smalle schermen geperst).
+ */
+.admin-communities-admin-grid {
+  display: grid;
+  grid-template-columns: minmax(200px, 300px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.admin-communities-admin-grid > .admin-portal-card {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1000px) {
+  .admin-communities-admin-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .admin-markten-row {
+    grid-template-columns: 1fr !important;
+  }
+}

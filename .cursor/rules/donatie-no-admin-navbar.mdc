@@ -1,0 +1,9 @@
+---
+description: Publieke navigatie is vast in code; geen admin-navbar
+alwaysApply: true
+---
+
+# Geen beheer van hoofdnavigatie
+
+- De **hoofd- en bottom-navigatie** staan in `src/components/public/PublicLayout.tsx` (`BASE_NAV`, `BASE_BOTTOM_NAV`, dynamische `mainNav` / `bottomNavItems`, enz.).
+- Oude `docs/SQL_ADMIN_LIVE_PHASE5_NAVBAR.sql` of data in `site_settings` voor navigatie telt **niet** bij de huidige roadmap; zie `docs/ADMIN_LIVE_PLAN.md`.
